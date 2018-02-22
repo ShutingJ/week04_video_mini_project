@@ -55,25 +55,26 @@ void ofApp::update(){
         unsigned char * briPixels = briOutput.getPixels().getData();
         
         for (int i = 0; i < (wWidth * wHeight); i++) {
-            if ((huePixels[i] >= 60  && huePixels[i] <= 85) &&
-                (satPixels[i] >= 140)) {
-                lockedOnPixels[i] = 255;
+            if ((huePixels[i] >= hue-12  && huePixels[i] <= hue+12) &&
+                (satPixels[i] >= sat-24 && satPixels[i] <= sat+200)) {
+                //lockedOnPixels[i] = CV_RGB(255, 0, 0);
             } else {
                 lockedOnPixels[i] = 0;
             }
         }
-        
-        lockedOnTexture.loadData(lockedOnPixels, wWidth, wHeight, GL_LUMINANCE);
+
         lockedOutput.setFromPixels(lockedOnPixels, wWidth, wHeight);
         
         lockedContours.findContours(lockedOutput, 160, (wWidth * wHeight) / 3, 1, false, true);
+        
+        lockedOnTexture.loadData(lockedOnPixels, wWidth, wHeight, GL_LUMINANCE);
         
         if (lockedContours.blobs.size() > 0 && drawEnabled) {
             int lineWidth = 3;
             
             for (int i = -lineWidth; i <= lineWidth; i++) {
                 for (int j = -lineWidth; j <= lineWidth; j++) {
-                    scribblePixels[((int)(lockedContours.blobs.at(0).centroid.y + i) * wWidth) + (int)((wWidth - lineWidth - 1) - lockedContours.blobs.at(0).centroid.x + j)] = 255;
+                    scribblePixels[((int)(lockedContours.blobs.at(0).centroid.y + i) * wWidth) + (int)((wWidth - lineWidth - 1) - lockedContours.blobs.at(0).centroid.x + j)] = 128;
                 }
             }
         }
@@ -95,8 +96,8 @@ void ofApp::draw(){
     lockedContours.draw();
     
     lockedOnTexture.draw(720, 0);
-    
-    scribbleOutput.draw(500, 500);
+    //ofDrawBitmapString("red", 720, 20);
+    scribbleOutput.draw(360, 260);
     
     char tmpStr[255];
     sprintf(tmpStr, "h: %i\ns: %i\nv: %i", hue, sat, val);

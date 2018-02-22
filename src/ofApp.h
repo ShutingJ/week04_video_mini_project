@@ -4,11 +4,11 @@
 #include "ofxVectorMath.h"
 #include "ofxOpenCv.h"
 
-class Color {
-public:
-    float hue, sat, bri;
-    ofxVec2f pos;
-};
+//class Color {
+//public:
+//    float hue, sat, bri;
+//    ofxVec2f pos;
+//};
 
 //#define _USE_LIVE_VIDEO
 // uncomment this to use a live camera
