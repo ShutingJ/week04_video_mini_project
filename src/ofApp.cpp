@@ -40,7 +40,7 @@ void ofApp::update(){
     wCam.update();
     if (wCam.isFrameNew()) {
         origOutput.setFromPixels(wCam.getPixels());
-        
+        //ofImage myImage = ofImage(wCam.getPixels());
         origOutputHSV = origOutput;
         origOutputHSV.convertRgbToHsv();
         
@@ -57,7 +57,7 @@ void ofApp::update(){
         for (int i = 0; i < (wWidth * wHeight); i++) {
             if ((huePixels[i] >= hue-12  && huePixels[i] <= hue+12) &&
                 (satPixels[i] >= sat-24 && satPixels[i] <= sat+200)) {
-                //lockedOnPixels[i] = CV_RGB(255, 0, 0);
+                lockedOnPixels[i] = 255;
             } else {
                 lockedOnPixels[i] = 0;
             }
